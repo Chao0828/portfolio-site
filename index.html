@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang ="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>Haruka Okada</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <a href="#Top">Haruka Okada</a>
+            <nav>
+                <a href="#About">About</a>
+                <a href="#works">Works</a>
+            </nav>
+        </header>
+        <main>
+            <section id="top">
+               <img src="./media/aurora.jpg" width="80%">
+               <h1>
+                   Haruka Okada<br>
+                   Portfolio
+               </h1>
+            </section>
+            <section id="About">
+                <h3>About</h3>
+                <p>
+                   岡田　春佳<br>
+                   東京都市大学デザイン・データ科学部
+                </p>
+                <p>
+                   専門：特に決まってない<br>
+                   スキル：
+                </p>
+            </section>
+            <section id="works" class="works">
+                <h3>Works</h3>
+                <div id="works-controls">
+                    <select id="category">
+                        <option value="all">すべてのカテゴリ</option>
+                    </select>
+                    <select id="sort">
+                        <option value="new">新しい順</option>
+                        <option value="old">古い順</option>
+                        <option value="title">タイトル順</option>
+                    </select>
+                </div>
+                <div id="works-grid"></div>
+            </section>
+        </main>
+        <footer>
+            <span>©2026 Haruka Okada</span>
+        </footer>
+        <script src="works.js"></script>    
+    </body>
+</html>
