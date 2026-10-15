@@ -1,103 +1,262 @@
-body {
-    background: rgb(255, 123, 0);
-   }
- a {
-    color: inherit;
-    text-decoration: none;
- }
- header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: fixed;
-    padding: 0px 30px;
-    background: #154e18;
-    height: 75px;
-    top: 0;
- }
- nav{
-    display: flex;
-    gap: 28px;
- }
- * {box-sizing: border-box;}
- section {
-    padding: 10px 30px;
- }
- footer {
-    padding: 20px 30px;
-    font-size: 11px;
- }
- nav a:hover {
-    color:#b75b5b
- }
-
-/*Works */
-#works-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 30px;
+/* --- 変数定義（ライト/ダークモードの切り替えを簡単に） --- */
+:root {
+   --bg-color: #f7f8fa;
+   --text-main: #2c2c2c;
+   --text-sub: #666666;
+   --header-bg: rgba(255, 255, 255, 0.7);
+   --card-bg: #ffffff;
+   --shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+   --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
+   --accent: #b75b5b;
 }
 
-.work-card img {
-    width: 100%;
-    aspect-ratio: 4 /3;
-    object-fit: cover;
-    display: block;
+body.dark {
+   --bg-color: #121212;
+   --text-main: #f0f0f0;
+   --text-sub: #a0a0a0;
+   --header-bg: rgba(18, 18, 18, 0.8);
+   --card-bg: #1e1e1e;
+   --shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+   --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* --- ベーススタイル --- */
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+   margin: 0;
+   background: var(--bg-color);
+   color: var(--text-main);
+   font-family: 'Inter', "Noto Sans JP", sans-serif;
+   transition: background-color 0.3s, color 0.3s; /* ふわっと切り替わる */
+}
+
+a {
+   color: var(--text-main);
+   text-decoration: none;
+   transition: color 0.2s;
+}
+
+a:hover {
+   color: var(--accent);
+}
+
+/* --- ヘッダー --- */
+header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   position: fixed;
+   top: 0; left: 0; right: 0;
+   padding: 0 40px;
+   height: 80px;
+   background: var(--header-bg);
+   backdrop-filter: blur(12px);
+   -webkit-backdrop-filter: blur(12px);
+   z-index: 1000;
+}
+
+.logo {
+   font-weight: 700;
+   font-size: 20px;
+}
+
+.header-right {
+   display: flex;
+   align-items: center;
+   gap: 30px;
+}
+
+nav {
+   display: flex;
+   gap: 24px;
+   font-weight: 500;
+}
+
+#theme-toggle {
+   background: none;
+   border: none;
+   font-size: 20px;
+   cursor: pointer;
+   padding: 5px;
+}
+
+/* --- 全体レイアウト --- */
+section {
+   padding: 100px 40px 60px; /* ヘッダーの被りを防ぐためにpadding-topを大きめに */
+   max-width: 1100px;
+   margin: 0 auto;
+}
+
+/* --- トップセクション --- */
+#top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   min-height: 100vh;
+   padding-top: 80px;
+   box-sizing: border-box;
+}
+
+.top-text h1 {
+   font-size: clamp(40px, 5vw, 64px); /* スマホでもPCでもいい感じの大きさに */
+   margin: 0 0 10px 0;
+   font-weight: 700;
+}
+
+.catchcopy {
+   font-size: 20px;
+   color: var(--text-sub);
+   margin-bottom: 30px;
+   font-weight: 300;
+}
+
+.university {
+   line-height: 1.8;
+}
+
+.top-img {
+   flex-shrink: 0;
+   width: 45%;
+}
+
+.top-img img {
+   width: 100%;
+   border-radius: 40px;
+   box-shadow: var(--shadow);
+   object-fit: cover;
+}
+
+/* --- Aboutセクション --- */
+#about {
+   background: var(--card-bg);
+   border-radius: 30px;
+   padding: 50px;
+   margin-top: 40px;
+   margin-bottom: 100px;
+   box-shadow: var(--shadow);
+   transition: background-color 0.3s;
+}
+
+#about h3 {
+   margin-top: 0;
+   font-size: 28px;
+}
+
+.about-content p {
+   line-height: 2;
+   margin-bottom: 20px;
+}
+
+/* --- Worksセクション --- */
+#works h3 {
+   font-size: 28px;
+   margin-bottom: 20px;
+}
+
+#works-controls {
+   display: flex;
+   gap: 15px;
+   margin-bottom: 40px;
+}
+
+#works-controls select {
+   padding: 12px 20px;
+   font-size: 15px;
+   border-radius: 12px;
+   border: 1px solid #ddd;
+   background: var(--card-bg);
+   color: var(--text-main);
+   cursor: pointer;
+   font-family: inherit;
+}
+body.dark #works-controls select {
+   border-color: #444;
+}
+
+/* グリッドを少し大きく設定 */
+#works-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+   gap: 40px;
 }
 
 .work-card {
-    border: 1px solid #154e18;
+   background: var(--card-bg);
+   border-radius: 24px;
+   overflow: hidden;
+   box-shadow: var(--shadow);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   display: flex;
+   flex-direction: column;
+}
+
+.work-card:hover {
+   transform: translateY(-8px);
+   box-shadow: var(--shadow-hover);
+}
+
+.work-card img {
+   width: 100%;
+   aspect-ratio: 4 / 3;
+   object-fit: cover;
+}
+
+.work-info {
+   padding: 24px;
+}
+
+.work-category {
+   font-size: 12px;
+   font-weight: 600;
+   color: var(--accent);
+   margin: 0 0 8px 0;
 }
 
 .work-card h4 {
-    margin: 0 15px 5px;
-    font-size: 14px;
-    line-height: 1.6;
+   margin: 0 0 10px 0;
+   font-size: 18px;
 }
-.works-card p {
-   margin: 0 15px 15px;
+
+.work-card p {
+   margin: 0 0 15px 0;
    font-size: 14px;
+   color: var(--text-sub);
    line-height: 1.6;
 }
-.work-card:hover{
-   opacity: 0.7;
-}
-.works-controls {
-   display: flex;
-   gap: 10px;
-   margin-top: 20px;
-   margin-bottom: 30px;
-}
-.works-controls select {
-   padding: 10px;
-   font-size: 16px;
-}
-.work-category {
-   font-size: 4px;
-   padding-top: 14px;
-   color: #000000;
-}
+
 .work-year {
-   font-size: 10px;
-   margin-top: 10px;
+   font-size: 12px;
+   color: var(--text-sub);
+   text-align: right;
+   margin: auto 0 0 0 !important; /* 年号を右下に配置 */
 }
 
-/* スマートフォン　*/
-@media screen and (max-width: 600px) {
+/* --- フッター --- */
+footer {
+   text-align: center;
+   padding: 40px;
+   color: var(--text-sub);
+   font-size: 12px;
+}
+
+/* --- スマートフォン対応 --- */
+@media screen and (max-width: 768px) {
    #top {
-      padding-top: 80px;
+       flex-direction: column-reverse;
+       justify-content: center;
+       text-align: center;
+       gap: 40px;
    }
-
-   #top img {
-      width: 100%;
+   .top-img {
+       width: 80%;
    }
-
-   #works-grid {
-      grid-template-columns: 1fr;
+   header {
+       padding: 0 20px;
    }
-
-   .works.controls {
-      flex-direction: column;
+   section {
+       padding: 100px 20px 40px;
    }
 }

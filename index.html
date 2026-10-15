@@ -3,37 +3,56 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Haruka Okada</title>
+        <title>Haruka Okada | Portfolio</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- Inter(英語)とNoto Sans JP(日本語)を読み込み -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     </head>
     <body>
         <header>
-            <a href="#Top">Haruka Okada</a>
-            <nav>
-                <a href="#About">About</a>
-                <a href="#works">Works</a>
-            </nav>
+            <a href="#top" class="logo">Haruka Okada</a>
+            <div class="header-right">
+                <nav>
+                    <a href="#about">About</a>
+                    <a href="#works">Works</a>
+                </nav>
+                <button id="theme-toggle">🌙</button>
+            </div>
         </header>
+
         <main>
             <section id="top">
-               <img src="./media/aurora.jpg" width="80%">
-               <h1>
-                   Haruka Okada<br>
-                   Portfolio
-               </h1>
+              <div class="top-text">
+                 <h1>Haruka Okada</h1>
+                 <p class="catchcopy">Design × Data × Technology</p>
+                 <p class="university">
+                     東京都市大学<br>
+                     デザイン・データ科学部
+                 </p>
+              </div>
+              <div class="top-img">
+                <img src="./media/icon.JPEG" alt="Haruka Okada">
+              </div>
             </section>
-            <section id="About">
+
+            <section id="about">
                 <h3>About</h3>
-                <p>
-                   岡田　春佳<br>
-                   東京都市大学デザイン・データ科学部
-                </p>
-                <p>
-                   専門：特に決まってない<br>
-                   スキル：
-                </p>
+                <div class="about-content">
+                    <p>
+                        <strong>岡田 春佳</strong><br>
+                        東京都市大学 デザイン・データ科学部
+                    </p>
+                    <p>
+                        <strong>Vision:</strong> データに基づいた論理的なアプローチと、心地よいUIデザインを掛け合わせ、人々の生活を少し豊かにする体験を創りたいです。<br>
+                        <strong>Interests:</strong> UI/UXデザイン、データ可視化、フロントエンド技術<br>
+                        <strong>Skills:</strong> HTML / CSS / JavaScript / Figma / Python
+                    </p>
+                </div>
             </section>
-            <section id="works" class="works">
+
+            <section id="works">
                 <h3>Works</h3>
                 <div id="works-controls">
                     <select id="category">
@@ -48,9 +67,11 @@
                 <div id="works-grid"></div>
             </section>
         </main>
+
         <footer>
-            <span>©2026 Haruka Okada</span>
+            <span>© 2026 Haruka Okada</span>
         </footer>
+
         <script src="works.js"></script>    
     </body>
 </html>

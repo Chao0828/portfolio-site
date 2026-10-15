@@ -3,42 +3,31 @@ fetch("works.csv")
         return response.text();
     })
     .then(function(data) {
+        // \r\n (Windows) と \n (Mac/Linux) どちらの改行でも正しく分割する
+        var rows = data.trim().split(/\r?\n/);
 
-        // CSVを行ごとに分割
-        var rows = data.trim().split("\n");
+        // 1行目は見出し (空白を取り除く)
+        var headers = rows[0].split(",").map(h => h.trim());
 
-        //　1行目は見出し
-        var headers = rows[0].split(",");
-
-        //　2行目以降は作品データにする
+        // 2行目以降は作品データにする
         var works = rows.slice(1).map(function(row) {
-
             var values = row.split(",");
-
             var work = {};
-
             headers.forEach(function(header, index) {
-                work[header] = values[index];
+                // undefinedにならないよう、値が存在するか確認して空白を取り除く
+                work[header] = values[index] ? values[index].trim() : "";
             });
-
             return work;
         });
 
-        // Worksを表示する場所
         var grid = document.getElementById("works-grid");
-
-        // HTML要素を取得
-        var grid = document.getElementById("works-grid");
-
         var categorySelect = document.getElementById("category");
-
         var sortSelect = document.getElementById("sort");
 
         // カテゴリ一覧を作る
         var categories = [];
-
         works.forEach(function(work) {
-            if (!categories.includes(work.category)) {
+            if (work.category && !categories.includes(work.category)) {
                 categories.push(work.category);
             }
         });
@@ -52,14 +41,8 @@ fetch("works.csv")
 
         // 作品を表示する関数
         function displayWorks() {
-
-            // 選択されたカテゴリを取得
             var selectedCategory = categorySelect.value;
-
-            // 選択されたソート方法を取得
             var sortType = sortSelect.value;
-
-            // 元のworksをコピー
             var filteredWorks = works.slice();
 
             // カテゴリ絞り込み
@@ -68,36 +51,32 @@ fetch("works.csv")
                     return work.category === selectedCategory;
                 });
             }
+
             // ソート
             if (sortType === "new") {
-                filteredWorks.sort(function(a,b) {
+                filteredWorks.sort(function(a, b) {
                     return Number(b.year) - Number(a.year);
                 });
-            }
-            else if (sortType === "old") {
-                filteredWorks.sort(function(a,b) {
+            } else if (sortType === "old") {
+                filteredWorks.sort(function(a, b) {
                     return Number(a.year) - Number(b.year);
                 });
-            }
-            else if (sortType === "title") {
-                filteredWorks.sort(function(a,b) {
+            } else if (sortType === "title") {
+                filteredWorks.sort(function(a, b) {
                     return a.title.localeCompare(b.title, "ja");
-                })
+                });
             }
 
-            // 画面を一度空にする
+            // 画面を空にして描画
             grid.innerHTML = "";
 
-            // 作品を1つずつ表示
             filteredWorks.forEach(function(work) {
-
                 var card = document.createElement("article");
-
                 card.className = "work-card";
 
                 card.innerHTML =
-                    '<a href="' + works.link + '">' +
-                        '<img src="' + work.image + '" alt="' +work.title + '">' +
+                    '<a href="' + work.link + '">' +
+                        '<img src="' + work.image + '" alt="' + work.title + '">' +
                         '<div class="work-info">' +
                             '<p class="work-category">' + work.category + '</p>' +
                             '<h4>' + work.title + '</h4>' +
@@ -110,17 +89,23 @@ fetch("works.csv")
             });
         }
 
-        // 最初に表示
         displayWorks();
 
-        // カテゴリ変更時
-        categorySelect.addEventListener("change", function() {
-            displayWorks();
-        });
-        
-        // ソート変更時
-        sortSelect.addEventListener("change", function() {
-            displayWorks();
-        });
-
+        categorySelect.addEventListener("change", displayWorks);
+        sortSelect.addEventListener("change", displayWorks);
     })
+    .catch(function(error) {
+        console.error("CSVの読み込みに失敗しました:", error);
+    });
+
+// --- ダークモード切り替え ---
+const toggle = document.getElementById("theme-toggle");
+
+toggle.addEventListener("click", function() {
+    document.body.classList.toggle("dark");
+    if (document.body.classList.contains("dark")) {
+        toggle.textContent = "☀️";
+    } else {
+        toggle.textContent = "🌙";
+    }
+});
